@@ -73,10 +73,7 @@ times 100 backbones each (3000 backbones total) took:
 - **Hardware:** a mix of NVIDIA RTX 5090 (14 of the 30 per-problem generation
   jobs, roughly 3.53 GPU-hours) and NVIDIA RTX PRO 6000 Blackwell Server
   Edition (16 of the 30 jobs, roughly 6.62 GPU-hours), on a university
-  cluster. Each per-problem job used 1 GPU, 4 CPU cores, and 16 GB RAM.
-
-Self-consistency evaluation compute (ProteinMPNN, ESMFold, Foldseek) is
-separate and isn't included in the numbers above.
+  cluster. Each per-problem job used 1 MIG partition, 4 CPU cores, and 16 GB RAM.
 
 ## Data availability
 
