@@ -1,38 +1,26 @@
-# RFD3 MotifBench benchmark (ExpertGuess contig recipe)
-
-Motif-scaffolding backbones for all 30 [MotifBench](https://github.com/blt2114/MotifBench)
-benchmark problems, generated with **RFD3** (RosettaFold Diffusion 3). We used the
-exact same expert-crafted contig recipe that MotifBench's own official "ExpertGuess"
-reference scaffolds were generated with (`example/contig_specifications.csv` in the
-MotifBench repository). Keeping the contig/placement strategy fixed and only swapping
-out the generative model gives a direct, apples-to-apples comparison against the
-officially published RFdiffusion(1) reference results.
+# General Information
+All 30 [MotifBench](https://github.com/blt2114/MotifBench)
+benchmark problems, were generated with [**RFD3**](https://www.biorxiv.org/content/10.1101/2025.09.18.676967v1) (RosettaFold Diffusion 3) on a cluster of the Technical University of Munich (TUM).
 
 ## Method
 
-- **Model:** RFD3, checkpoint `rfd3_latest.ckpt`.
-- **Contig recipe:** MotifBench's official expert-crafted contigs
-  (`scripts/contig_specifications.csv` in this repo, copied verbatim from
+- **Model:** RFD3, checkpoint `rfd3_latest.ckpt` (dated 2026-06-03).
+- **Contigs:** MotifBench's reference contigmaps were translated 1 to 1 to the RFD3 style.
+  (`scripts/contig_specifications.csv` in this repo, copied from
   MotifBench's `example/contig_specifications.csv`). In other words, the same
-  segment placement and gap ranges used to generate the published ExpertGuess
-  reference backbones, just run through RFD3 instead of RFdiffusion(1).
-- **Generation settings:** `n_batches=100`, `diffusion_batch_size=1` per problem
-  (100 backbones per problem, matching the standard MotifBench design budget),
-  `prevalidate_inputs=True`, everything else left at RFD3's defaults.
+  segment placement and gap ranges used to generate the
+  reference backbones were used.
+- **Generation settings:** `n_batches=100`, `diffusion_batch_size=1` per problem,
+  `prevalidate_inputs=True` and `is_non_loopy: True`.
 - **UNK → GLY relabeling (generation input only):** MotifBench marks "redesign
   positions" (structurally required, sequence left open) as `UNK` residues with
   backbone-only atoms. Feeding `UNK` straight into RFD3 crashes its
   non-standard-residue atomization pathway, since `UNK` isn't in RFD3's
   `STANDARD_AA` allowlist, unlike `GLY`, which has the same backbone-only
-  geometry. To get around this, we relabel `UNK` to `GLY` in the structure fed
-  to RFD3 only, and mark those exact positions via RFD3's
-  `select_unfixed_sequence` field so it still designs a real identity there
-  instead of treating "GLY" as the fixed answer. Evaluation reads from the
-  original, untouched `UNK`-labeled reference PDBs, so none of this affects
-  scoring or redesign-position detection.
-- **Multi-chain motifs:** a handful of problems (e.g. `22_1BCF`, `25_2RKX`)
-  place motif segments across multiple original chains. `select_unfixed_sequence`
-  and the `UNK` to `GLY` relabeling are computed per chain, not just for chain A.
+  geometry. To get around this, we copied the motifs, relabeled `UNK` to `GLY`
+  and marked those exact positions via RFD3's `select_unfixed_sequence` field.
+  Meanwhile the evaluation reads from the original, `UNK`-labeled reference PDBs.
+  Everything else was left to the RFD3 defaults.
 
 ## Scripts
 
@@ -48,7 +36,7 @@ officially published RFdiffusion(1) reference results.
   realized motif placement from the JSON's `specification.extra.sampled_contig`
   field, since RFD3 randomizes gap lengths per sample the same way
   RFdiffusion(1) does.
-- `scripts/contig_specifications.csv`: the expert contig recipe used, copied
+- `scripts/contig_specifications.csv`: the referemce contigs used, copied
   from MotifBench's `example/` directory.
 
 Evaluation itself used MotifBench's own unmodified `scripts/evaluate_bbs.sh`
