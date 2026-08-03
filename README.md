@@ -78,8 +78,7 @@ times 100 backbones each (3000 backbones total) took:
 ## Data availability
 
 Submitted scaffold set, full evaluation results, and summary results:
-`<Zenodo DOI to be added>`
-
+[`<Zenodo DOI>`](https://zenodo.org/records/21717410?token=eyJhbGciOiJIUzUxMiJ9.eyJpZCI6ImU5NWZlNjY0LTUxYzctNDNmZS05MGI5LWM4ZDQ2MDM3MzczMiIsImRhdGEiOnt9LCJyYW5kb20iOiI3NDdhY2Q0OGZjOWE1ZmNiMWU3OTgwZjZmNzNiNWMyYSJ9.mhSgAsyax3lAX3I6QeCYzmEF-Ot3MFVzIDCBhMLBCI_tQ1ZEbYPxqpBMJ8uBTn7ICNbv_9fIMBJj3KVNaiswug)
 ## Contact
 
 Lorenz Kleiter, lorenz.kleiter@tum.de
