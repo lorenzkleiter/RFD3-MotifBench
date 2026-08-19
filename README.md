@@ -1,4 +1,8 @@
-# General Information
+# Note
+This is and **outdated** version. I have since rerun the benchmark and got much better results.
+See this [repo](https://github.com/lorenzkleiter/RFD3-Motifbench-Fixed)
+
+## General Information
 All 30 [MotifBench](https://github.com/blt2114/MotifBench)
 benchmark problems, were generated with [**RFD3**](https://www.biorxiv.org/content/10.1101/2025.09.18.676967v1) (RosettaFold Diffusion 3) on a cluster of the Technical University of Munich (TUM).
 
